@@ -35,3 +35,21 @@ SELECT * FROM car_models WHERE year <= 2015 AND year >= 2010;
 -- Timing #1 = 34.550 ms
 SELECT * FROM car_models WHERE year = 2010;
 
+CREATE INDEX make_code_index ON car_models (make_code);
+CREATE INDEX year_index ON car_models (year);
+
+-- Timing #2 = 2.941 ms
+\timing
+SELECT DISTINCT make_title FROM car_models WHERE make_code = 'LAM';
+
+-- Timing #2 = 1.405 ms
+SELECT DISTINCT model_title FROM car_models WHERE make_code = 'NISSAN' AND model_code = 'GT-R';
+
+-- Timing #2 = 1.164 ms
+SELECT make_code, model_code, model_title, year FROM car_models WHERE make_code = 'LAM';
+
+-- Timing #2 = 61.439 ms
+SELECT * FROM car_models WHERE year <= 2015 AND year >= 2010;
+
+-- Timing #2 = 12.872 ms
+SELECT * FROM car_models WHERE year = 2010;
