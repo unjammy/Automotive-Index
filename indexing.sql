@@ -39,7 +39,6 @@ CREATE INDEX make_code_index ON car_models (make_code);
 CREATE INDEX year_index ON car_models (year);
 
 -- Timing #2 = 2.941 ms
-\timing
 SELECT DISTINCT make_title FROM car_models WHERE make_code = 'LAM';
 
 -- Timing #2 = 1.405 ms
@@ -53,3 +52,13 @@ SELECT * FROM car_models WHERE year <= 2015 AND year >= 2010;
 
 -- Timing #2 = 12.872 ms
 SELECT * FROM car_models WHERE year = 2010;
+
+CREATE INDEX lambos_index ON car_models (make_code) WHERE make_code LIKE '%LAM%';
+CREATE INDEX twothousands_index ON car_models (year) WHERE year >= 2010 AND year <= 2015;
+
+-- Timing #3 = 2.412 ms
+SELECT DISTINCT make_title FROM car_models WHERE make_code = 'LAM';
+
+-- Timing #3 = 57.659 ms
+\timing
+SELECT * FROM car_models WHERE year <= 2015 AND year >= 2010;
